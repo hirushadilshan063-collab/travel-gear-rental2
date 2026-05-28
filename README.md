@@ -1,2 +1,1649 @@
-# travel-gear-rental2
-webpagetest2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kandawura.lk | Premium Travel Gear Rental</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* =========================================
+           1. CSS VARIABLES & RESET
+           ========================================= */
+        :root {
+            /* Palette - Earthy & Adventurous */
+            --primary-color: #1a472a; /* Dark Forest Green */
+            --secondary-color: #8b5a2b; /* Earthy Brown */
+            --accent-color: #ff9f1c; /* Vibrant Orange/Sun */
+            --text-dark: #1f2937;
+            --text-light: #f3f4f6;
+            --bg-body: #ffffff;
+            --bg-card: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.85);
+            --border-color: #e5e7eb;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Dark Mode Variables */
+        body.dark-mode {
+            --primary-color: #2d6a4f; 
+            --secondary-color: #a67c52;
+            --text-dark: #f3f4f6;
+            --text-light: #9ca3af;
+            --bg-body: #111827;
+            --bg-card: #1f2937;
+            --bg-glass: rgba(31, 41, 55, 0.85);
+            --border-color: #374151;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--secondary-color);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(139, 90, 43, 0.3);
+        }
+
+        .btn-outline {
+            border-color: white;
+            color: white;
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        /* =========================================
+           2. LOADING ANIMATION
+           ========================================= */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-color);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255,255,255,0.3);
+            border-top: 5px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loader-text {
+            color: white;
+            margin-top: 15px;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* =========================================
+           3. NAVBAR
+           ========================================= */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--accent-color);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.9);
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .theme-toggle, .mobile-toggle {
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .mobile-toggle {
+            display: none;
+        }
+
+        /* Responsive Nav */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--bg-card);
+                flex-direction: column;
+                padding: 20px;
+                gap: 20px;
+                transform: translateY(-150%);
+                transition: transform 0.4s ease;
+                box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav-menu.active {
+                transform: translateY(0);
+            }
+
+            .nav-link {
+                color: var(--text-dark);
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .navbar.scrolled .logo {
+                color: var(--primary-color);
+            }
+            .navbar.scrolled .nav-icons button {
+                color: var(--text-dark);
+            }
+            /* Initial colors for non-scrolled mobile state */
+            .logo { color: white; } 
+            .nav-icons button { color: white; }
+        }
+
+        /* =========================================
+           4. HERO SECTION
+           ========================================= */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('https://picsum.photos/seed/srilanka-mountains/1920/1080');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.5s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        /* =========================================
+           5. STATS SECTION
+           ========================================= */
+        .stats-section {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 60px 0;
+            margin-top: -50px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        /* =========================================
+           6. FEATURED GEAR
+           ========================================= */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-dark);
+            outline: none;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .gear-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .gear-card {
+            background: var(--bg-card);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            border: 1px solid var(--border-color);
+        }
+
+        .gear-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .gear-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .gear-card:hover .gear-img {
+            transform: scale(1.1);
+        }
+
+        .gear-details {
+            padding: 20px;
+        }
+
+        .gear-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .gear-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .gear-rating {
+            color: #ffc107;
+            font-size: 0.9rem;
+        }
+
+        .gear-price {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .gear-status {
+            display: inline-block;
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: #d1fae5;
+            color: #065f46;
+            margin-bottom: 15px;
+        }
+
+        .btn-block {
+            width: 100%;
+            text-align: center;
+        }
+
+        /* =========================================
+           7. PACKAGES
+           ========================================= */
+        .packages-section {
+            background-color: #f8faf9; /* Very light green tint */
+        }
+        
+        body.dark-mode .packages-section {
+            background-color: #1a2420;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .package-card {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .package-card:hover {
+            border-color: var(--primary-color);
+        }
+
+        .package-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .package-price {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 15px 0;
+            color: var(--text-dark);
+        }
+
+        .package-features {
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .package-features li {
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .package-features i {
+            color: var(--primary-color);
+            margin-right: 10px;
+        }
+
+        /* =========================================
+           8. BOOKING PROCESS (TIMELINE)
+           ========================================= */
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            max-width: 1000px;
+            margin: 60px auto;
+            flex-wrap: wrap;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #e5e7eb;
+            z-index: 0;
+        }
+
+        .timeline-step {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--bg-card);
+            border: 4px solid var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .timeline-step:hover .step-icon {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .step-title {
+            font-weight: 600;
+        }
+
+        /* =========================================
+           9. WHY CHOOSE US
+           ========================================= */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-box {
+            padding: 30px;
+            border-radius: 10px;
+            background: var(--bg-card);
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-box i {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        /* =========================================
+           10. TESTIMONIALS
+           ========================================= */
+        .testimonial-slider {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+            background: var(--bg-card);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            padding: 50px;
+            text-align: center;
+        }
+
+        .slide {
+            display: none;
+            animation: fadeEffect 0.8s;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeEffect {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        .user-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            object-fit: cover;
+            border: 3px solid var(--accent-color);
+        }
+
+        .review-text {
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .user-name {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .slider-controls {
+            margin-top: 30px;
+        }
+
+        .control-dot {
+            height: 12px;
+            width: 12px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .control-dot.active {
+            background-color: var(--primary-color);
+        }
+
+        /* =========================================
+           11. GALLERY
+           ========================================= */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            cursor: pointer;
+            height: 250px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 71, 42, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay i {
+            color: white;
+            font-size: 2rem;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 5px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+        }
+
+        /* =========================================
+           12. CONTACT & FOOTER
+           ========================================= */
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 40px;
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-dark);
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .contact-info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        .contact-info-item i {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 250px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: block;
+            color: white;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .social-links a {
+            display: inline-flex;
+            width: 35px;
+            height: 35px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            transition: 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--accent-color);
+        }
+
+        .newsletter-form {
+            display: flex;
+            margin-top: 15px;
+        }
+
+        .newsletter-form input {
+            padding: 10px;
+            border-radius: 5px 0 0 5px;
+            border: none;
+            outline: none;
+            width: 100%;
+        }
+
+        .newsletter-form button {
+            padding: 10px 15px;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+
+        .copyright {
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            font-size: 0.9rem;
+            color: #9ca3af;
+        }
+
+        /* =========================================
+           13. FLOATING UI ELEMENTS
+           ========================================= */
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 990;
+            transition: transform 0.3s;
+        }
+
+        .floating-whatsapp:hover {
+            transform: scale(1.1);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: var(--primary-color);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s;
+            z-index: 990;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Toast Notification */
+        .toast-container {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 2000;
+        }
+
+        .toast {
+            background: var(--bg-card);
+            color: var(--text-dark);
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border-left: 4px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Scroll Reveal Utility */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Responsive Adjustments */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .timeline::before { display: none; }
+            .timeline { flex-direction: column; gap: 30px; }
+            .contact-wrapper { grid-template-columns: 1fr; }
+            .section-title { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Animation -->
+    <div id="loader">
+        <div class="loader-spinner"></div>
+        <p class="loader-text">KANDAWURA.LK</p>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <img src="" alt="Full view" class="lightbox-img" id="lightboxImg">
+    </div>
+
+    <!-- Floating Elements -->
+    <a href="https://wa.me/" class="floating-whatsapp" target="_blank" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <div class="back-to-top" id="backToTop" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-mountain"></i> Kandawura.lk
+            </a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#gear" class="nav-link">Gear</a></li>
+                <li><a href="#packages" class="nav-link">Packages</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+
+            <div class="nav-icons">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Open Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="home" class="hero">
+        <div class="hero-content">
+            <h1>Rent Premium Travel & Camping Gear for Your Next Adventure</h1>
+            <p>Explore the beauty of Sri Lanka without the baggage. High-quality gear, islandwide delivery, and hassle-free booking.</p>
+            <div class="hero-btns">
+                <a href="#gear" class="btn btn-primary">Browse Gear</a>
+                <a href="#packages" class="btn btn-outline">Start Renting</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid" id="statsSection">
+                <div class="stat-item">
+                    <h3 data-target="500">0</h3>
+                    <p>Happy Travelers</p>
+                </div>
+                <div class="stat-item">
+                    <h3 data-target="1200">0</h3>
+                    <p>Rentals</p>
+                </div>
+                <div class="stat-item">
+                    <h3 data-target="50">0</h3>
+                    <p>Gear Items</p>
+                </div>
+                <div class="stat-item">
+                    <h3 data-target="25">0</h3>
+                    <p>Districts Covered</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Gear Section -->
+    <section id="gear" class="section-padding">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Featured Rental Gear</h2>
+                <p>Top-quality equipment for every terrain.</p>
+            </div>
+
+            <div class="filter-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search gear (e.g., Tent, Backpack)...">
+                </div>
+            </div>
+
+            <div class="gear-grid" id="gearGrid">
+                <!-- Gear items will be injected via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Adventure Packages -->
+    <section id="packages" class="section-padding packages-section">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-title">Adventure Packages</h2>
+                <p>Curated bundles for your specific trip type.</p>
+            </div>
+            <div class="packages-grid mt-5 reveal">
+                <!-- Package 1 -->
+                <div class="package-card">
+                    <i class="fas fa-campground package-icon"></i>
+                    <h3>Beginner Camping Kit</h3>
+                    <div class="package-price">Rs. 2,500<span style="font-size: 1rem;">/day</span></div>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check"></i> 2-Person Tent</li>
+                        <li><i class="fas fa-check"></i> 2 Sleeping Bags</li>
+                        <li><i class="fas fa-check"></i> LED Lantern</li>
+                    </ul>
+                    <button class="btn btn-primary btn-block" onclick="handleBooking('Beginner Camping Kit')">Book Now</button>
+                </div>
+
+                <!-- Package 2 -->
+                <div class="package-card">
+                    <i class="fas fa-hiking package-icon"></i>
+                    <h3>Mountain Hiking Bundle</h3>
+                    <div class="package-price">Rs. 1,800<span style="font-size: 1rem;">/day</span></div>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check"></i> 60L Backpack</li>
+                        <li><i class="fas fa-check"></i> Trekking Poles</li>
+                        <li><i class="fas fa-check"></i> Waterproof Poncho</li>
+                    </ul>
+                    <button class="btn btn-primary btn-block" onclick="handleBooking('Mountain Hiking Bundle')">Book Now</button>
+                </div>
+
+                <!-- Package 3 -->
+                <div class="package-card">
+                    <i class="fas fa-umbrella-beach package-icon"></i>
+                    <h3>Beach Camping Set</h3>
+                    <div class="package-price">Rs. 3,200<span style="font-size: 1rem;">/day</span></div>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check"></i> Large Shade Tent</li>
+                        <li><i class="fas fa-check"></i> Portable Hammock</li>
+                        <li><i class="fas fa-check"></i> Cool Box</li>
+                    </ul>
+                    <button class="btn btn-primary btn-block" onclick="handleBooking('Beach Camping Set')">Book Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Process -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-title">How It Works</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-step">
+                    <div class="step-icon"><i class="fas fa-mouse-pointer"></i></div>
+                    <div class="step-title">Choose Gear</div>
+                </div>
+                <div class="timeline-step">
+                    <div class="step-icon"><i class="fas fa-calendar-alt"></i></div>
+                    <div class="step-title">Select Dates</div>
+                </div>
+                <div class="timeline-step">
+                    <div class="step-icon"><i class="fas fa-credit-card"></i></div>
+                    <div class="step-title">Confirm Booking</div>
+                </div>
+                <div class="timeline-step">
+                    <div class="step-icon"><i class="fas fa-plane-departure"></i></div>
+                    <div class="step-title">Enjoy Adventure</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section id="about" class="section-padding" style="background-color: var(--bg-body);">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Why Choose Kandawura?</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-box reveal">
+                    <i class="fas fa-wallet"></i>
+                    <h4>Affordable Rentals</h4>
+                    <p>Top gear at a fraction of the buying cost. Perfect for occasional travelers.</p>
+                </div>
+                <div class="feature-box reveal">
+                    <i class="fas fa-medal"></i>
+                    <h4>High Quality Gear</h4>
+                    <p>We maintain our equipment meticulously. Safety and durability guaranteed.</p>
+                </div>
+                <div class="feature-box reveal">
+                    <i class="fas fa-truck"></i>
+                    <h4>Islandwide Delivery</h4>
+                    <p>We deliver to your doorstep or pick-up point anywhere in Sri Lanka.</p>
+                </div>
+                <div class="feature-box reveal">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>Trusted by Travelers</h4>
+                    <p>Join 500+ happy adventurers who explored Sri Lanka with our gear.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section-padding packages-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Traveler Stories</h2>
+            </div>
+            <div class="testimonial-slider reveal">
+                <!-- Slide 1 -->
+                <div class="slide active">
+                    <img src="https://picsum.photos/seed/user1/100/100" alt="User" class="user-img">
+                    <p class="review-text">"The camping gear was spotless and the backpack was perfect for the Knuckles trek. Highly recommended!"</p>
+                    <h4 class="user-name">Amal Perera</h4>
+                    <div class="gear-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="slide">
+                    <img src="https://picsum.photos/seed/user2/100/100" alt="User" class="user-img">
+                    <p class="review-text">"Great service and delivery to Unawatuna was super fast. The beach kit made our weekend trip memorable."</p>
+                    <h4 class="user-name">Sarah Jenkins</h4>
+                    <div class="gear-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="slide">
+                    <img src="https://picsum.photos/seed/user3/100/100" alt="User" class="user-img">
+                    <p class="review-text">"Affordable prices for high-end brands. I rented a camera setup for Ella and it worked flawlessly."</p>
+                    <h4 class="user-name">Kavindu Rathnayake</h4>
+                    <div class="gear-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                </div>
+
+                <div class="slider-controls" id="sliderControls">
+                    <!-- Dots injected by JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Adventure Gallery</h2>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item" onclick="openLightbox('https://picsum.photos/seed/camp1/800/600')">
+                    <img src="https://picsum.photos/seed/camp1/400/300" alt="Camping">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox('https://picsum.photos/seed/hike2/800/600')">
+                    <img src="https://picsum.photos/seed/hike2/400/300" alt="Hiking">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox('https://picsum.photos/seed/mount3/800/600')">
+                    <img src="https://picsum.photos/seed/mount3/400/300" alt="Mountains">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox('https://picsum.photos/seed/beach4/800/600')">
+                    <img src="https://picsum.photos/seed/beach4/400/300" alt="Beach">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox('https://picsum.photos/seed/gear5/800/600')">
+                    <img src="https://picsum.photos/seed/gear5/400/300" alt="Gear">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox('https://picsum.photos/seed/travel6/800/600')">
+                    <img src="https://picsum.photos/seed/travel6/400/300" alt="Travelers">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section-padding packages-section">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-title">Get In Touch</h2>
+                <p>Have questions? We're here to help plan your adventure.</p>
+            </div>
+            <div class="contact-wrapper">
+                <div class="contact-form-container reveal">
+                    <form class="contact-form" onsubmit="handleContact(event)">
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Your Email" required>
+                        <input type="text" placeholder="Subject">
+                        <textarea rows="5" placeholder="How can we help?" required></textarea>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+                <div class="contact-info reveal">
+                    <div class="contact-info-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+94 77 123 4567</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>hello@kandawura.lk</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Location</h4>
+                            <p>Kandy, Sri Lanka</p>
+                        </div>
+                    </div>
+                    <!-- Map Placeholder -->
+                    <div class="map-container">
+                        <p><i class="fas fa-map"></i> Google Map Embed Placeholder</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="#" class="footer-logo"><i class="fas fa-mountain"></i> Kandawura.lk</a>
+                    <p>Your trusted partner for adventure travel gear in Sri Lanka. Lightweight, durable, and ready for the wild.</p>
+                    <div class="social-links mt-4">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#gear">Browse Gear</a></li>
+                        <li><a href="#packages">Packages</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Newsletter</h4>
+                    <p>Subscribe for adventure tips and offers.</p>
+                    <form class="newsletter-form" onsubmit="event.preventDefault(); showToast('Subscribed successfully!', 'success');">
+                        <input type="email" placeholder="Email Address" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 Kandawura.lk — Adventure Starts Here</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- 1. DATA & INITIALIZATION ---
+        const gearData = [
+            { id: 1, name: "Camping Tent (4-Person)", price: 2500, rating: 4.8, category: "camping", image: "https://picsum.photos/seed/tent/400/300" },
+            { id: 2, name: "Hiking Backpack 65L", price: 800, rating: 4.9, category: "hiking", image: "https://picsum.photos/seed/backpack/400/300" },
+            { id: 3, name: "Portable Gas Stove", price: 450, rating: 4.5, category: "cooking", image: "https://picsum.photos/seed/stove/400/300" },
+            { id: 4, name: "Sleeping Bag (-10°C)", price: 600, rating: 4.7, category: "camping", image: "https://picsum.photos/seed/sleeping/400/300" },
+            { id: 5, name: "Action Camera GoPro", price: 1500, rating: 5.0, category: "electronics", image: "https://picsum.photos/seed/camera/400/300" },
+            { id: 6, name: "Carbon Trekking Poles", price: 300, rating: 4.6, category: "hiking", image: "https://picsum.photos/seed/poles/400/300" },
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Remove Loader
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                loader.style.opacity = '0';
+                loader.style.visibility = 'hidden';
+            }, 1000);
+
+            renderGear(gearData);
+            initTestimonialSlider();
+            setupIntersectionObserver();
+        });
+
+        // --- 2. GEAR RENDERING & FILTERING ---
+        const gearGrid = document.getElementById('gearGrid');
+        const searchInput = document.getElementById('searchInput');
+
+        function renderGear(items) {
+            gearGrid.innerHTML = items.map(item => `
+                <div class="gear-card reveal">
+                    <div style="overflow:hidden">
+                        <img src="${item.image}" alt="${item.name}" class="gear-img">
+                    </div>
+                    <div class="gear-details">
+                        <div class="gear-header">
+                            <h3 class="gear-title">${item.name}</h3>
+                            <span class="gear-rating"><i class="fas fa-star"></i> ${item.rating}</span>
+                        </div>
+                        <span class="gear-status">Available</span>
+                        <span class="gear-price">Rs. ${item.price}/day</span>
+                        <button class="btn btn-primary btn-block" onclick="handleBooking('${item.name}')">Rent Now</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Re-trigger reveal animation observer for new elements
+            setupIntersectionObserver();
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = gearData.filter(item => item.name.toLowerCase().includes(term));
+            renderGear(filtered);
+        });
+
+        // --- 3. UI INTERACTIONS ---
+        
+        // Sticky Navbar
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+                navbar.querySelector('.logo').style.color = 'var(--primary-color)';
+                document.querySelectorAll('.nav-link').forEach(l => l.style.color = 'var(--text-dark)');
+                document.querySelectorAll('.nav-icons button').forEach(b => b.style.color = 'var(--text-dark)');
+            } else {
+                navbar.classList.remove('scrolled');
+                navbar.querySelector('.logo').style.color = 'white';
+                document.querySelectorAll('.nav-link').forEach(l => l.style.color = 'rgba(255,255,255,0.9)');
+                document.querySelectorAll('.nav-icons button').forEach(b => b.style.color = 'white');
+            }
+
+            // Back to top visibility
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Mobile Menu
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            const icon = mobileToggle.querySelector('i');
+            if(navMenu.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+                icon.style.color = 'var(--text-dark)';
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+                // Reset color based on scroll is handled in scroll event mostly, but initial fix:
+                if(window.scrollY <= 50) icon.style.color = 'white';
+            }
+        });
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const icon = themeToggle.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+
+        // Toast Notification System (No Alert)
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Mock Booking Handler
+        function handleBooking(itemName) {
+            showToast(`Added "${itemName}" to cart!`, 'success');
+        }
+
+        function handleContact(e) {
+            e.preventDefault();
+            showToast('Message sent successfully!', 'success');
+            e.target.reset();
+        }
+
+        // --- 4. TESTIMONIAL SLIDER ---
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const controlsContainer = document.getElementById('sliderControls');
+
+        function initTestimonialSlider() {
+            // Create dots
+            slides.forEach((_, index) => {
+                const dot = document.createElement('span');
+                dot.className = `control-dot ${index === 0 ? 'active' : ''}`;
+                dot.onclick = () => goToSlide(index);
+                controlsContainer.appendChild(dot);
+            });
+            
+            // Auto play
+            setInterval(nextSlide, 5000);
+        }
+
+        function updateSlides() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                const dots = document.querySelectorAll('.control-dot');
+                dots[index].classList.remove('active');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                    dots[index].classList.add('active');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlides();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlides();
+        }
+
+        // --- 5. LIGHTBOX ---
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+        }
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        // --- 6. ANIMATIONS (Reveal & Counters) ---
+        function setupIntersectionObserver() {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            reveals.forEach(el => revealObserver.observe(el));
+
+            // Counter Animation
+            const statsSection = document.getElementById('statsSection');
+            const counters = document.querySelectorAll('.stat-item h3');
+            let started = false;
+
+            const statsObserver = new IntersectionObserver((entries) => {
+                if(entries[0].isIntersecting && !started) {
+                    started = true;
+                    counters.forEach(counter => {
+                        const target = +counter.getAttribute('data-target');
+                        const duration = 2000; // 2 seconds
+                        const increment = target / (duration / 16); // 60fps
+                        
+                        let current = 0;
+                        const updateCounter = () => {
+                            current += increment;
+                            if(current < target) {
+                                counter.innerText = Math.ceil(current) + "+";
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                counter.innerText = target + "+";
+                            }
+                        };
+                        updateCounter();
+                    });
+                }
+            }, { threshold: 0.5 });
+
+            statsObserver.observe(statsSection);
+        }
+
+    </script>
+</body>
+</html>
